@@ -21,7 +21,7 @@ function RegisterForm() {
   };
 
   return (
-    <form className="form" onSubmit={handleSubmit(submitHandler)}>
+    <form className="auth-form" onSubmit={handleSubmit(submitHandler)}>
       <label>
         Имя:
         <input
