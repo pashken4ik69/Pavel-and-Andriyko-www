@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
+import { useForm, type SubmitHandler } from "react-hook-form";
 import { useUpdateMeMutation } from "../api/usersApi";
 import type { IUserUpdate } from "../model/users-type";
 import { updateUserSchema } from "../model/user-scheme";
@@ -7,60 +7,70 @@ import { useAppSelector } from "../../../app/store/store";
 
 function ProfileForm() {
   const { user } = useAppSelector((state) => state.auth);
+  
   const {
     handleSubmit,
     formState: { errors },
     register,
-  } = useForm({
-    resolver: yupResolver(updateUserSchema),
+  } = useForm<IUserUpdate>({
+    resolver: yupResolver(updateUserSchema) as any,
     defaultValues: {
-      name: user?.name,
-      email: user?.email,
+      name: user?.name || "",
+      email: user?.email || "",
     },
   });
 
-  const [updateMe] = useUpdateMeMutation();
+  const [updateMe, { isLoading }] = useUpdateMeMutation();
 
-  const submitHandler = async (user: IUserUpdate) => {
-    await updateMe(user).unwrap();
+  const submitHandler: SubmitHandler<IUserUpdate> = async (data) => {
+    try {
+      await updateMe(data).unwrap();
+      alert("Данные успешно обновлены!");
+    } catch (err: any) {
+      alert(err.data?.message || "Ошибка при обновлении профиля");
+    }
   };
 
   return (
-    <form className="form" onSubmit={handleSubmit(submitHandler)}>
-      <label>
-        Имя:
+    <form className="auth-form" onSubmit={handleSubmit(submitHandler)}>
+      <h2>Настройки профиля</h2>
+      
+      <div className="field">
+        <label>Имя:</label>
         <input
-          placeholder="Введите имч"
-          style={errors.name ? { borderColor: "red" } : undefined}
+          placeholder="Введите имя"
+          style={errors.name ? { border: "1px solid red"} : undefined}
           type="text"
           {...register("name")}
         />
         {errors.name && <p className="error">{errors.name.message}</p>}
-      </label>
+      </div>
 
-      <label>
-        Email:
+      <div className="field">
+        <label>Email:</label>
         <input
           placeholder="Введите email"
-          style={errors.email ? { borderColor: "red" } : undefined}
+          style={errors.email ? { border: "1px solid red"} : undefined}
           type="email"
           {...register("email")}
         />
         {errors.email && <p className="error">{errors.email.message}</p>}
-      </label>
+      </div>
 
-      <label>
-        Пароль:
+      <div className="field">
+        <label>Новый пароль (необязательно):</label>
         <input
-          placeholder="Введите пароль"
-          style={errors.password ? { borderColor: "red" } : undefined}
+          placeholder="Введите новый пароль"
+          style={errors.password ? { border: "1px solid red"} : undefined}
           type="password"
           {...register("password")}
         />
         {errors.password && <p className="error">{errors.password.message}</p>}
-      </label>
+      </div>
 
-      <button type="submit">сохранить</button>
+      <button type="submit" disabled={isLoading}>
+        {isLoading ? "Сохранение..." : "Сохранить изменения"}
+      </button>
     </form>
   );
 }
