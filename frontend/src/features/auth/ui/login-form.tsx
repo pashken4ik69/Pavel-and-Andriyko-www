@@ -29,7 +29,7 @@ function LoginForm() {
       <label>
         Email:
         <input
-          placeholder="Введите имя"
+          placeholder="Введите email"
           style={errors.email ? { borderColor: "red" } : undefined}
           type="email"
           {...register("email")}
