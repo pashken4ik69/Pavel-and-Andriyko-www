@@ -15,5 +15,5 @@ export interface ISpaceCrate {
   pricePerHour: number
   capacity: number
   description: string
-  images: string
+  images?: string
 }

@@ -10,6 +10,17 @@ function Layout() {
       <nav className="header">
         <NavLink to={"/"}>Домой</NavLink>
         <NavLink to={"/spaces"}>Места</NavLink>
+
+        {user && (
+          <>
+            <NavLink to={"/profile"}>Профиль</NavLink>
+            <a href="#" onClick={() => dispatch(clearUser())}>
+              Выйти
+            </a>
+            <a href="#">{user?.name}</a>
+          </>
+        )}
+
         {!user && (
           <>
             <NavLink to={"/register"}>Регистрация</NavLink>
@@ -20,7 +31,6 @@ function Layout() {
         {user?.role === "client" && (
           <>
             <NavLink to={"/my-bookings"}>Мои брони</NavLink>
-            <NavLink to={"/profile"}>Профиль</NavLink>
           </>
         )}
 
@@ -29,11 +39,6 @@ function Layout() {
             <NavLink to={"/manage-bookings"}>Брони менеджера</NavLink>
           </>
         )}
-
-        <a href="#" onClick={() => dispatch(clearUser())}>
-          Выйти
-        </a>
-        <a href="#">{user?.name}</a>
       </nav>
       <main>
         <Outlet />

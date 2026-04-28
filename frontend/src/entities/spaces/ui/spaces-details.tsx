@@ -28,18 +28,22 @@ const schema = yup.object().shape({
 function SpacesDetails() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  
+
   const { data: space, isLoading } = useGetSpaceQuery(id || "");
   const { user } = useAppSelector((state) => state.auth);
 
   const [showCalendar, setShowCalendar] = useState(false);
   const [isReviewFormOpen, setIsReviewFormOpen] = useState(false);
-  
+
   const [createBooking, { isLoading: isBooking }] = useCreateBookingsMutation();
   const [deleteSpace, { isLoading: isDeleting }] = useDeleteSpaceMutation();
 
-  const { register, handleSubmit, formState: { errors } } = useForm<IBookingForm>({
-    resolver: yupResolver(schema) as any
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IBookingForm>({
+    resolver: yupResolver(schema) as any,
   });
 
   const onSubmit: SubmitHandler<IBookingForm> = async (values) => {
@@ -48,7 +52,7 @@ function SpacesDetails() {
         ...values,
         spaceId: Number(space?.id),
         userId: user?.id,
-        comment: values.comment || ""
+        comment: values.comment || "",
       }).unwrap();
       alert("Успешно забронировано!");
       setShowCalendar(false);
@@ -75,7 +79,7 @@ function SpacesDetails() {
   return (
     <div className="details">
       <img src={space.images} alt={space.title} />
-      
+
       <div className="details-info">
         <h1>{space.title}</h1>
         <p>{space.description}</p>
@@ -85,9 +89,18 @@ function SpacesDetails() {
         <code>Тип: {space.zoneType}</code>
       </div>
 
-      <div className="actions" style={{ display: 'flex', gap: '10px', marginTop: '20px', flexWrap: 'wrap', justifyContent: 'center' }}>
+      <div
+        className="actions"
+        style={{
+          display: "flex",
+          gap: "10px",
+          marginTop: "20px",
+          flexWrap: "wrap",
+          justifyContent: "center",
+        }}
+      >
         <button onClick={() => navigate("/spaces")}>Назад</button>
-        
+
         {!showCalendar && (
           <button onClick={() => setShowCalendar(true)}>Забронировать</button>
         )}
@@ -104,28 +117,40 @@ function SpacesDetails() {
           <h4>Бронирование</h4>
           <div className="field">
             <label>Дата:</label>
-            <input type="date" {...register("date")} min={new Date().toISOString().split("T")[0]} />
-            {errors.date && <span className="error">{errors.date.message}</span>}
+            <input
+              type="date"
+              {...register("date")}
+              min={new Date().toISOString().split("T")[0]}
+            />
+            {errors.date && (
+              <span className="error">{errors.date.message}</span>
+            )}
           </div>
           <div className="field">
             <label>Время с:</label>
             <input type="time" {...register("timeFrom")} />
-            {errors.timeFrom && <span className="error">{errors.timeFrom.message}</span>}
+            {errors.timeFrom && (
+              <span className="error">{errors.timeFrom.message}</span>
+            )}
           </div>
           <div className="field">
             <label>Время по:</label>
             <input type="time" {...register("timeTo")} />
-            {errors.timeTo && <span className="error">{errors.timeTo.message}</span>}
+            {errors.timeTo && (
+              <span className="error">{errors.timeTo.message}</span>
+            )}
           </div>
           <div className="field">
             <label>Комментарий:</label>
             <textarea {...register("comment")} />
           </div>
-          <div style={{ display: 'flex', gap: '10px' }}>
+          <div style={{ display: "flex", gap: "10px" }}>
             <button type="submit" disabled={isBooking}>
               {isBooking ? "Загрузка..." : "Подтвердить"}
             </button>
-            <button type="button" onClick={() => setShowCalendar(false)}>Отмена</button>
+            <button type="button" onClick={() => setShowCalendar(false)}>
+              Отмена
+            </button>
           </div>
         </form>
       )}
@@ -133,27 +158,44 @@ function SpacesDetails() {
       {isReviewFormOpen && <ReviewsCreateForm spaceId={id!} />}
 
       {user?.role === "manager" && (
-        <div className="manager-panel" style={{ marginTop: '30px', borderTop: '1px solid var(--border)', paddingTop: '20px', width: '100%' }}>
+        <div
+          className="manager-panel"
+          style={{
+            marginTop: "30px",
+            borderTop: "1px solid var(--border)",
+            paddingTop: "20px",
+            width: "100%",
+          }}
+        >
           <h4>Админ-панель</h4>
-          <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', marginTop: '10px' }}>
+          <div
+            style={{
+              display: "flex",
+              gap: "10px",
+              justifyContent: "center",
+              marginTop: "10px",
+            }}
+          >
             <button onClick={() => navigate(`/spaces/edit/${id}`)}>
               Изменить
             </button>
-            <button 
-              onClick={handleDelete} 
+            <button
+              onClick={handleDelete}
               disabled={isDeleting}
-              style={{ borderColor: '#ef4444', color: '#ef4444' }}
+              style={{ borderColor: "#ef4444", color: "#ef4444" }}
             >
               {isDeleting ? "Удаление..." : "Удалить"}
             </button>
           </div>
+          <div
+            className="reviews-section"
+            style={{ width: "100%", marginTop: "40px" }}
+          >
+            <h2>Отзывы</h2>
+            <ReviewsList spaceId={id!} />
+          </div>
         </div>
       )}
-
-      <div className="reviews-section" style={{ width: '100%', marginTop: '40px' }}>
-        <h2>Отзывы</h2>
-        <ReviewsList spaceId={id!} />
-      </div>
     </div>
   );
 }
