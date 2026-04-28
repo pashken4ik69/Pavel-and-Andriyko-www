@@ -25,7 +25,7 @@ function LoginForm() {
   };
 
   return (
-    <form className="form" onSubmit={handleSubmit(submitHandler)}>
+    <form className="auth-form" onSubmit={handleSubmit(submitHandler)}>
       <label>
         Email:
         <input
