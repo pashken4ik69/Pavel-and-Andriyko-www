@@ -9,12 +9,27 @@ function Layout() {
     <div>
       <nav className="header">
         <NavLink to={"/"}>Домой</NavLink>
-        <NavLink to={"/register"}>Регистрация</NavLink>
-        <NavLink to={"/login"}>Логин</NavLink>
         <NavLink to={"/spaces"}>Места</NavLink>
-        <NavLink to={"/profile"}>Профиль</NavLink>
-        <NavLink to={"/my-bookings"}>Мои брони</NavLink>
-        <NavLink to={"/manage-bookings"}>Брони менеджера</NavLink>
+        {!user && (
+          <>
+            <NavLink to={"/register"}>Регистрация</NavLink>
+            <NavLink to={"/login"}>Логин</NavLink>
+          </>
+        )}
+
+        {user?.role === "client" && (
+          <>
+            <NavLink to={"/my-bookings"}>Мои брони</NavLink>
+            <NavLink to={"/profile"}>Профиль</NavLink>
+          </>
+        )}
+
+        {user?.role === "manager" && (
+          <>
+            <NavLink to={"/manage-bookings"}>Брони менеджера</NavLink>
+          </>
+        )}
+
         <a href="#" onClick={() => dispatch(clearUser())}>
           Выйти
         </a>

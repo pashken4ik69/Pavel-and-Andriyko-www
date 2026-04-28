@@ -4,6 +4,7 @@ export interface IUser {
   name: string
   role: 'guest' | 'client' | 'manager'
   isActive: boolean
+  password: string
 }
 
 export interface IUserResponse {
@@ -22,4 +23,10 @@ export interface IUserReg {
 export interface IUserLog {
   email: string
   password: string
+}
+
+export interface IUserUpdate {
+  email: string
+  name: string
+  password?: string
 }

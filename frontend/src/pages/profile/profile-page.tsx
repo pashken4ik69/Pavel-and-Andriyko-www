@@ -1,10 +1,7 @@
+import ProfileForm from "../../features/auth/ui/profile-form";
 
 function ProfilePage() {
-  return (
-    <div>
-      
-    </div>
-  )
+  return <ProfileForm />;
 }
 
-export default ProfilePage
+export default ProfilePage;
