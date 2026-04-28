@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import type { IUser, IUserResponse } from "./usersType";
+import type { IUser, IUserResponse } from "./users-type";
 
 interface AuthState {
   user: IUser | null

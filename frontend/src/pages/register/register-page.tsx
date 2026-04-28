@@ -1,10 +1,7 @@
+import RegisterForm from "../../features/auth/ui/register-form";
 
 function RegisterPage() {
-  return (
-    <div>
-      
-    </div>
-  )
+  return <RegisterForm />;
 }
 
-export default RegisterPage
+export default RegisterPage;
