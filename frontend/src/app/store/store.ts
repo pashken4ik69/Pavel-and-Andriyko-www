@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { baseApi } from "../../shared/lib/baseApi";
 import { useDispatch, useSelector } from "react-redux";
 import authReducer from "../../features/auth/model/user-slice"
-import sapcesReducers from "../../entities/spaces/models/spces-slice"
+import sapcesReducers from "../../entities/spaces/model/spces-slice"
 
 
 export const store = configureStore({
