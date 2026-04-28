@@ -1,11 +1,15 @@
 import { useNavigate, useParams } from "react-router";
 import { useGetSpaceQuery } from "../api/spces-api";
 import { useAppSelector } from "../../../app/store/store";
+import { useState } from "react";
+import ReviewsCreateForm from "../../../features/reviews/ui/reviews-create-form";
+import ReviewsList from "../../reviews/ui/reviews-list";
 function SpacesDetails() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { data: space } = useGetSpaceQuery(id || "");
+  const { data: space } = useGetSpaceQuery(id!);
   const { user } = useAppSelector((state) => state.auth);
+  const [isReviewFormOpen, setIsReviewFormOpen] = useState(false);
 
   if (!space) return <div>Данные отсутствуют</div>;
 
@@ -20,12 +24,23 @@ function SpacesDetails() {
       <p>{space.zoneType}</p>
       <button onClick={() => navigate("/spaces")}>Назад</button>
       <button>Забронировать</button>
+
+      {user?.role === "client" && (
+        <>
+          <button onClick={() => setIsReviewFormOpen(!isReviewFormOpen)}>
+            Оставить отзыв
+          </button>
+          {isReviewFormOpen && <ReviewsCreateForm spaceId={id!} />}
+        </>
+      )}
       {user?.role === "manager" && (
         <>
           <button>Удалить</button>
           <button>Изменить</button>
+          <p>Отзывы:</p>
         </>
       )}
+      <ReviewsList spaceId={id!} />
     </div>
   );
 }

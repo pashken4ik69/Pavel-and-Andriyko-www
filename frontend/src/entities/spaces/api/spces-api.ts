@@ -1,5 +1,5 @@
 import { baseApi } from "../../../shared/lib/baseApi";
-import type { ISpace } from "../models/types";
+import type { ISpace } from "../model/types";
 
 export const spacesApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
