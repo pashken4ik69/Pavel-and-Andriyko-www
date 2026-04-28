@@ -340,8 +340,6 @@ code {
 .auth-form{
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   gap: 20px;
   width: 400px;
 }
@@ -400,3 +398,5 @@ main {
   margin: 40px 0;
   width: 100%;
 }
+
+

@@ -25,7 +25,7 @@ function RegisterForm() {
       <label>
         Имя:
         <input
-          placeholder="Введите имч"
+          placeholder="Введите имя"
           style={errors.name ? { borderColor: "red" } : undefined}
           type="text"
           {...register("name")}
