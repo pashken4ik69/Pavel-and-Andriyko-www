@@ -138,3 +138,28 @@ code {
   gap: 10px;
   justify-content: center;
 }
+
+
+.details{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.list{
+  display: grid; 
+  justify-content: center;
+  align-items: center;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.card{
+  padding: 10px;
+  border: 1px solid white;
+  border-radius: 30px;
+  width: 80%;
+  height: 30vh;
+}
