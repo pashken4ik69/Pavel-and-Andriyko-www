@@ -1,10 +1,7 @@
+import LoginForm from "../../features/auth/ui/login-form";
 
 function LoginPage() {
-  return (
-    <div>
-      
-    </div>
-  )
+  return <LoginForm />;
 }
 
-export default LoginPage
+export default LoginPage;
