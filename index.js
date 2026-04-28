@@ -1,7 +1,8 @@
-
-
 const container = document.querySelector(".container")
+const button = document.querySelector(".button")
 
-const click = addEventListener("click", () => {
-  container?.append("привет")
+button?.addEventListener("click", () => {
+  const text = document.createElement("p")
+  text.textContent = "привет"
+  container?.append(text)
 })
