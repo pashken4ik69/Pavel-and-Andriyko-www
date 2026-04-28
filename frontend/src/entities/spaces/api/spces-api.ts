@@ -16,7 +16,7 @@ export const spacesApi = baseApi.injectEndpoints({
         url: `spaces/${id}`,
         method: "GET",
       }),
-      providesTags: (result, error, id) => [{ type: "Spaces", id }]
+      providesTags: ["Spaces"]
     }),
 
     createSpace: build.mutation<ISpace, Partial<ISpace>>({
@@ -47,10 +47,10 @@ export const spacesApi = baseApi.injectEndpoints({
   })
 })
 
-export const { 
-  useGetSpacesQuery, 
+export const {
+  useGetSpacesQuery,
   useGetSpaceQuery,
-  useCreateSpaceMutation, 
-  useUpdateSpaceMutation, 
-  useDeleteSpaceMutation 
+  useCreateSpaceMutation,
+  useUpdateSpaceMutation,
+  useDeleteSpaceMutation
 } = spacesApi;

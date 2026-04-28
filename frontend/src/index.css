@@ -95,6 +95,9 @@ p {
   margin: 0;
 }
 
+a {
+  text-decoration: none;
+}
 code,
 .counter {
   font-family: var(--mono);
@@ -124,11 +127,16 @@ code {
   width: fit-content;
   padding: 10px 20px;
   border-radius: 8px;
+
   label {
     display: flex;
     flex-direction: column;
+
     input {
       height: 20px;
+      border-radius: 6px;
+      border: 1px solid white;
+      padding: 5px 5px;
     }
   }
 }
@@ -137,6 +145,8 @@ code {
   display: flex;
   gap: 10px;
   justify-content: center;
+  background-color: rgba(0, 0, 0, 0.54);
+  padding: 15px 0;
 }
 
 
