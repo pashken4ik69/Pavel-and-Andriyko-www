@@ -5,6 +5,7 @@ function Layout() {
         <div>
             <nav>
                 <NavLink to={"/"}>Home</NavLink>
+                <NavLink to={"/spaces"}>Spaces</NavLink>
             </nav>
             <main>
                 <Outlet />
