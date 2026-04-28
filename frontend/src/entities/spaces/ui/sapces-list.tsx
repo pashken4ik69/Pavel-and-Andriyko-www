@@ -1,14 +1,13 @@
 import { useNavigate } from "react-router"
-import { useAppSelector } from "../../../app/store/store"
-import { useEffect } from "react"
+import { useGetSpacesQuery } from "../api/spces-api"
 
 function SpacesList() {
-    const {spaces} = useAppSelector(state => state.sapces)
+    const {data: spaces} = useGetSpacesQuery()
     const navigate = useNavigate()
 
-    useEffect(() =>{
-        
-    }, [spaces])
+    if (!spaces) {
+        return <div>Spaces нету</div>
+    }
 
   return (
     <div className="list">
